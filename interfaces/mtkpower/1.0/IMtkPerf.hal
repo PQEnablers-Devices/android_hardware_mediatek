@@ -1,0 +1,6 @@
+package vendor.mediatek.hardware.mtkpower@1.0;
+
+interface IMtkPerf {
+    perfLockAcquire(int32_t pl_handle, uint32_t duration, vec<int32_t> boostsList, int32_t reserved) generates (int32_t ret);
+    oneway perfLockRelease(int32_t pl_handle, int32_t reserved);
+};
