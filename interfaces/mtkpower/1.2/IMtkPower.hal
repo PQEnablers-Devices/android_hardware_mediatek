@@ -4,5 +4,5 @@ import @1.1::IMtkPower;
 import IMtkPowerCallback;
 
 interface IMtkPower extends @1.1::IMtkPower {
-    setMtkScnUpdateCallback(int32_t clientId, IMtkPowerCallback callback) generates (int32_t ret);
+    setMtkScnUpdateCallback(int32_t hint, IMtkPowerCallback callback) generates (int32_t ret);
 };

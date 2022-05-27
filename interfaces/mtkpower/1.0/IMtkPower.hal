@@ -1,10 +1,10 @@
 package vendor.mediatek.hardware.mtkpower@1.0;
 
 interface IMtkPower {
-    oneway mtkCusPowerHint(int32_t hint, int32_t param_2);
-    oneway mtkPowerHint(int32_t hint, int32_t param_2);
-    oneway notifyAppState(string param_1, string param_2, int32_t param_3, int32_t param_4, int32_t param_5);
-    querySysInfo(int32_t param_1, int32_t param_2) generates (int32_t ret);
-    setSysInfo(int32_t param1, string param_2) generates (int32_t ret);
-    setSysInfoAsync(int32_t param1, string param_2) generates (int32_t ret);
+    oneway mtkCusPowerHint(int32_t hint, int32_t data);
+    oneway mtkPowerHint(int32_t hint, int32_t data);
+    oneway notifyAppState(string pack, string act, int32_t pid, int32_t state, int32_t uid);
+    querySysInfo(int32_t cmd, int32_t param) generates (int32_t ret);
+    setSysInfo(int32_t type, string data) generates (int32_t ret);
+    setSysInfoAsync(int32_t type, string data) generates (int32_t ret);
 };
