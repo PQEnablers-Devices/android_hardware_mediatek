@@ -30,6 +30,10 @@ namespace power {
 namespace impl {
 namespace mediatek {
 
+const std::vector<Boost> BOOST_RANGE{ndk::enum_range<Boost>().begin(),
+                                     ndk::enum_range<Boost>().end()};
+const std::vector<Mode> MODE_RANGE{ndk::enum_range<Mode>().begin(), ndk::enum_range<Mode>().end()};
+
 Power::Power() { libpowerhal_Init(1); }
 
 Power::~Power() { }
@@ -77,11 +81,8 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
 
 ndk::ScopedAStatus Power::isModeSupported(Mode type, bool* _aidl_return) {
     LOG(INFO) << "Power isModeSupported: " << static_cast<int32_t>(type);
-    *_aidl_return = true;
+    *_aidl_return = type >= MODE_RANGE.front() && type <= MODE_RANGE.back();
 
-    if (type >= Mode::CAMERA_STREAMING_HIGH) {
-        *_aidl_return = false;
-    }
     return ndk::ScopedAStatus::ok();
 }
 
@@ -101,11 +102,8 @@ ndk::ScopedAStatus Power::setBoost(Boost type, int32_t durationMs) {
 
 ndk::ScopedAStatus Power::isBoostSupported(Boost type, bool* _aidl_return) {
     LOG(INFO) << "Power isBoostSupported: " << static_cast<int32_t>(type);
-    *_aidl_return = true;
+    *_aidl_return = type >= BOOST_RANGE.front() && type <= BOOST_RANGE.back();
 
-    if (type >= Boost::CAMERA_SHOT) {
-        *_aidl_return = false;
-    }
     return ndk::ScopedAStatus::ok();
 }
 
