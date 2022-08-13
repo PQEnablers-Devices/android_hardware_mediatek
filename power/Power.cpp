@@ -107,6 +107,7 @@ ndk::ScopedAStatus Power::isBoostSupported(Boost type, bool* _aidl_return) {
     return ndk::ScopedAStatus::ok();
 }
 
+#if POWERHAL_AIDL_VERSION == 2
 ndk::ScopedAStatus Power::createHintSession(int32_t, int32_t, const std::vector<int32_t>&, int64_t,
                                             std::shared_ptr<IPowerHintSession>* _aidl_return) {
     *_aidl_return = nullptr;
@@ -117,6 +118,7 @@ ndk::ScopedAStatus Power::getHintSessionPreferredRate(int64_t* outNanoseconds) {
     *outNanoseconds = -1;
     return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
 }
+#endif
 
 }  // namespace mediatek
 }  // namespace impl
