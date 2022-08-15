@@ -30,6 +30,11 @@ namespace power {
 namespace impl {
 namespace mediatek {
 
+#ifdef MODE_EXT
+extern bool isDeviceSpecificModeSupported(Mode type, bool* _aidl_return);
+extern bool setDeviceSpecificMode(Mode type, bool enabled);
+#endif
+
 const std::vector<Boost> BOOST_RANGE{ndk::enum_range<Boost>().begin(),
                                      ndk::enum_range<Boost>().end()};
 const std::vector<Mode> MODE_RANGE{ndk::enum_range<Mode>().begin(), ndk::enum_range<Mode>().end()};
@@ -41,6 +46,11 @@ Power::~Power() { }
 ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
     LOG(VERBOSE) << "Power setMode: " << static_cast<int32_t>(type) << " to: " << enabled;
 
+#ifdef MODE_EXT
+    if (setDeviceSpecificMode(type, enabled)) {
+        return ndk::ScopedAStatus::ok();
+    }
+#endif
     switch (type) {
 #ifdef TAP_TO_WAKE_NODE
         case Mode::DOUBLE_TAP_TO_WAKE:
@@ -80,6 +90,12 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
 }
 
 ndk::ScopedAStatus Power::isModeSupported(Mode type, bool* _aidl_return) {
+#ifdef MODE_EXT
+    if (isDeviceSpecificModeSupported(type, _aidl_return)) {
+        return ndk::ScopedAStatus::ok();
+    }
+#endif
+
     LOG(INFO) << "Power isModeSupported: " << static_cast<int32_t>(type);
     *_aidl_return = type >= MODE_RANGE.front() && type <= MODE_RANGE.back();
 
