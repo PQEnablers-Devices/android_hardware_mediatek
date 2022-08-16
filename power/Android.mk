@@ -15,7 +15,7 @@ LOCAL_SHARED_LIBRARIES := \
     libbase \
     libbinder_ndk \
     libpowerhal \
-    android.hardware.power-V$(TARGET_POWERHAL_AIDL_VERSION)-ndk_platform
+    android.hardware.power-V$(TARGET_POWERHAL_AIDL_VERSION)-ndk
 
 LOCAL_CFLAGS += -DPOWERHAL_AIDL_VERSION=$(TARGET_POWERHAL_AIDL_VERSION)
 
