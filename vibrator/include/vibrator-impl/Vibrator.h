@@ -24,10 +24,11 @@ namespace android {
 namespace hardware {
 namespace vibrator {
 
-const std::string kVibratorState    = "/sys/class/leds/vibrator/state";
-const std::string kVibratorDuration = "/sys/class/leds/vibrator/duration";
-const std::string kVibratorActivate = "/sys/class/leds/vibrator/activate";
-const std::string kVibratorStrength = "/sys/kernel/thunderquake_engine/level";
+const std::string kVibratorState       = "/sys/class/leds/vibrator/state";
+const std::string kVibratorDuration    = "/sys/class/leds/vibrator/duration";
+const std::string kVibratorActivate    = "/sys/class/leds/vibrator/activate";
+const std::string kVibratorStrength    = "/sys/kernel/thunderquake_engine/level";
+const std::string kVibratorStrengthMax = "/sys/kernel/thunderquake_engine/max";
 
 static std::map<Effect, int32_t> vibEffects = {
     { Effect::CLICK, 50 },
@@ -37,9 +38,9 @@ static std::map<Effect, int32_t> vibEffects = {
 };
 
 static std::map<EffectStrength, int32_t> vibStrengths = {
-    { EffectStrength::LIGHT, 5},
-    { EffectStrength::MEDIUM, 7},
-    { EffectStrength::STRONG, 11}
+    { EffectStrength::LIGHT, 4},
+    { EffectStrength::MEDIUM, 6},
+    { EffectStrength::STRONG, 10}
 };
 
 class Vibrator : public BnVibrator {
@@ -79,10 +80,12 @@ public:
 private:
     static ndk::ScopedAStatus setNode(const std::string path, const std::string value);
     static ndk::ScopedAStatus setNode(const std::string path, const int32_t value);
+    static int getNode(const std::string path, const int fallback);
     static bool nodeExists(const std::string path);
 
     ndk::ScopedAStatus activate(const int32_t timeoutMs);
     bool mVibratorStrengthSupported;
+    int mVibratorStrengthMax;
 };
 
 }  // namespace vibrator

@@ -26,7 +26,10 @@ namespace hardware {
 namespace vibrator {
 
 Vibrator::Vibrator() {
-    mVibratorStrengthSupported = nodeExists(kVibratorStrength);
+    if (nodeExists(kVibratorStrength)) {
+        mVibratorStrengthSupported = true;
+        mVibratorStrengthMax = getNode(kVibratorStrengthMax, 9);
+    }
 }
 
 ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
@@ -80,7 +83,9 @@ ndk::ScopedAStatus Vibrator::perform(Effect effect, EffectStrength strength,
         return ndk::ScopedAStatus(AStatus_fromExceptionCode(EX_UNSUPPORTED_OPERATION));
 
     if (mVibratorStrengthSupported) {
-        status = setNode(kVibratorStrength, vibStrengths[strength]);
+        // Vibration strength is relative to the max strength reported by the kernel.
+        int vib_strength = static_cast<int>(mVibratorStrengthMax * vibStrengths[strength] / 10.0 + 0.5);
+        status = setNode(kVibratorStrength, vib_strength);
         if (!status.isOk())
             return status;
     }
@@ -208,6 +213,22 @@ ndk::ScopedAStatus Vibrator::setNode(const std::string path, const std::string v
 
 ndk::ScopedAStatus Vibrator::setNode(std::string path, const int32_t value) {
     return setNode(path, std::to_string(value));
+}
+
+/*
+ * Read integer from path
+ */
+int Vibrator::getNode(const std::string path, const int fallback) {
+    std::ifstream file(path);
+    int value;
+
+    if (!file.is_open()) {
+        LOG(ERROR) << "failed to read from " << path.c_str();
+        return fallback;
+    }
+
+    file >> value;
+    return value;
 }
 
 bool Vibrator::nodeExists(const std::string path) {
