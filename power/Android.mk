@@ -1,3 +1,5 @@
+ifneq ($(TARGET_POWERHAL_AIDL_VERSION),none)
+
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
@@ -29,3 +31,5 @@ ifneq ($(TARGET_POWERHAL_MODE_EXT),)
 endif
 
 include $(BUILD_SHARED_LIBRARY)
+
+endif # TARGET_POWERHAL_AIDL_VERSION
