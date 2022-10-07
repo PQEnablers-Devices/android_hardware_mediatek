@@ -48,10 +48,10 @@ extern bool isDeviceSpecificModeSupported(Mode type, bool* _aidl_return);
 extern bool setDeviceSpecificMode(Mode type, bool enabled);
 #endif
 
-constexpr char kPowerHalStateProp[] = "vendor.powerhal.state";
-constexpr char kPowerHalAudioProp[] = "vendor.powerhal.audio";
-constexpr char kPowerHalRenderingProp[] = "vendor.powerhal.rendering";
-constexpr char kPowerHalAdpfRateProp[] = "vendor.powerhal.adpf.rate";
+constexpr char kPowerHalStateProp[] = "vendor.mediatek.powerhal.state";
+constexpr char kPowerHalAudioProp[] = "vendor.mediatek.powerhal.audio";
+constexpr char kPowerHalRenderingProp[] = "vendor.mediatek.powerhal.rendering";
+constexpr char kPowerHalAdpfRateProp[] = "vendor.mediatek.powerhal.adpf.rate";
 constexpr int64_t kPowerHalAdpfRateDefault = -1;
 
 Power::Power(std::shared_ptr<HintManager> hm)

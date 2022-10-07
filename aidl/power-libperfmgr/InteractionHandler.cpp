@@ -47,17 +47,17 @@ namespace pixel {
 namespace {
 
 static const bool kDisplayIdleSupport =
-        ::android::base::GetBoolProperty("vendor.powerhal.disp.idle_support", true);
+        ::android::base::GetBoolProperty("vendor.mediatek.powerhal.disp.idle_support", true);
 static const std::array<const char *, 2> kDispIdlePath = {"/sys/class/drm/card0/device/idle_state",
                                                           "/sys/class/graphics/fb0/idle_state"};
 static const uint32_t kWaitMs =
-        ::android::base::GetUintProperty("vendor.powerhal.disp.idle_wait", /*default*/ 100U);
+        ::android::base::GetUintProperty("vendor.mediatek.powerhal.disp.idle_wait", /*default*/ 100U);
 static const uint32_t kMinDurationMs =
-        ::android::base::GetUintProperty("vendor.powerhal.interaction.min", /*default*/ 1400U);
+        ::android::base::GetUintProperty("vendor.mediatek.powerhal.interaction.min", /*default*/ 1400U);
 static const uint32_t kMaxDurationMs =
-        ::android::base::GetUintProperty("vendor.powerhal.interaction.max", /*default*/ 5650U);
+        ::android::base::GetUintProperty("vendor.mediatek.powerhal.interaction.max", /*default*/ 5650U);
 static const uint32_t kDurationOffsetMs =
-        ::android::base::GetUintProperty("vendor.powerhal.interaction.offset", /*default*/ 650U);
+        ::android::base::GetUintProperty("vendor.mediatek.powerhal.interaction.offset", /*default*/ 650U);
 
 static size_t CalcTimespecDiffMs(struct timespec start, struct timespec end) {
     size_t diff_in_ms = 0;

@@ -39,7 +39,7 @@ using ::android::MessageHandler;
 using ::android::Thread;
 using ::android::perfmgr::HintManager;
 
-constexpr char kPowerHalAdpfDisableTopAppBoost[] = "vendor.powerhal.adpf.disable.hint";
+constexpr char kPowerHalAdpfDisableTopAppBoost[] = "vendor.mediatek.powerhal.adpf.disable.hint";
 
 class PowerSessionManager : public MessageHandler {
   public:

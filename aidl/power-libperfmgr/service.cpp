@@ -33,8 +33,8 @@ using aidl::google::hardware::power::impl::pixel::PowerHintMonitor;
 using aidl::google::hardware::power::impl::pixel::PowerSessionManager;
 using ::android::perfmgr::HintManager;
 
-constexpr std::string_view kPowerHalInitProp("vendor.powerhal.init");
-constexpr std::string_view kConfigProperty("vendor.powerhal.config");
+constexpr std::string_view kPowerHalInitProp("vendor.mediatek.powerhal.init");
+constexpr std::string_view kConfigProperty("vendor.mediatek.powerhal.config");
 constexpr std::string_view kConfigDefaultFileName("powerhint.json");
 
 int main() {
@@ -68,7 +68,7 @@ int main() {
     CHECK(status == STATUS_OK);
     LOG(INFO) << "Xiaomi Power HAL AIDL Service with Extension is started.";
 
-    if (::android::base::GetIntProperty("vendor.powerhal.adpf.rate", -1) != -1) {
+    if (::android::base::GetIntProperty("vendor.mediatek.powerhal.adpf.rate", -1) != -1) {
         PowerHintMonitor::getInstance()->start();
         PowerSessionManager::getInstance()->setHintManager(hm);
     }
