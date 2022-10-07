@@ -1,4 +1,4 @@
-ifneq ($(TARGET_POWERHAL_AIDL_VERSION),none)
+ifeq ($(TARGET_USES_MTK_POWERHAL),true)
 
 LOCAL_PATH := $(call my-dir)
 
@@ -32,4 +32,4 @@ endif
 
 include $(BUILD_SHARED_LIBRARY)
 
-endif # TARGET_POWERHAL_AIDL_VERSION
+endif # TARGET_USES_MTK_POWERHAL
