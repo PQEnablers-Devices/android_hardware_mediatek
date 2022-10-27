@@ -17,7 +17,9 @@
 #pragma once
 
 #include <aidl/android/hardware/vibrator/BnVibrator.h>
+#ifdef VIBRATOR_SUPPORTS_EFFECTS
 #include <map>
+#endif
 
 namespace aidl {
 namespace android {
@@ -27,6 +29,8 @@ namespace vibrator {
 const std::string kVibratorState       = "/sys/class/leds/vibrator/state";
 const std::string kVibratorDuration    = "/sys/class/leds/vibrator/duration";
 const std::string kVibratorActivate    = "/sys/class/leds/vibrator/activate";
+
+#ifdef VIBRATOR_SUPPORTS_EFFECTS
 const std::string kVibratorStrength    = "/sys/kernel/thunderquake_engine/level";
 const std::string kVibratorStrengthMax = "/sys/kernel/thunderquake_engine/max";
 
@@ -41,10 +45,13 @@ static std::map<EffectStrength, int32_t> vibStrengths = {
     { EffectStrength::MEDIUM, 6},
     { EffectStrength::STRONG, 10}
 };
+#endif
 
 class Vibrator : public BnVibrator {
 public:
+#ifdef VIBRATOR_SUPPORTS_EFFECTS
     Vibrator();
+#endif
     ndk::ScopedAStatus getCapabilities(int32_t* _aidl_return) override;
     ndk::ScopedAStatus off() override;
     ndk::ScopedAStatus on(int32_t timeoutMs,
@@ -75,16 +82,15 @@ public:
     ndk::ScopedAStatus getSupportedBraking(std::vector<Braking>* supported) override;
     ndk::ScopedAStatus composePwle(const std::vector<PrimitivePwle> &composite,
                                    const std::shared_ptr<IVibratorCallback> &callback) override;
-
 private:
-    static ndk::ScopedAStatus setNode(const std::string path, const std::string value);
     static ndk::ScopedAStatus setNode(const std::string path, const int32_t value);
+#ifdef VIBRATOR_SUPPORTS_EFFECTS
+    static bool exists(const std::string path);
     static int getNode(const std::string path, const int fallback);
-    static bool nodeExists(const std::string path);
-
-    ndk::ScopedAStatus activate(const int32_t timeoutMs);
     bool mVibratorStrengthSupported;
     int mVibratorStrengthMax;
+#endif
+    ndk::ScopedAStatus activate(const int32_t timeoutMs);
 };
 
 }  // namespace vibrator

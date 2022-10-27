@@ -1,0 +1,4 @@
+service vendor.vibrator-mediatek /vendor/bin/hw/android.hardware.vibrator-service.mediatek
+    class hal
+    user system
+    group system
