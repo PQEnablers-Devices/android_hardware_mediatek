@@ -565,14 +565,14 @@ bool ThermalHelper::initializeSensorMap(
         if (sensor_info_pair.second.virtual_sensor_info != nullptr) {
             continue;
         }
-        if (!path_map.count(sensor_name.data())) {
-            LOG(ERROR) << "Could not find " << sensor_name << " in sysfs";
+        if (!path_map.count(sensor_info_pair.second.zone_name.data())) {
+            LOG(ERROR) << "Could not find " << sensor_info_pair.second.zone_name << " in sysfs";
             return false;
         }
 
         std::string path;
         if (sensor_info_pair.second.temp_path.empty()) {
-            path = ::android::base::StringPrintf("%s/%s", path_map.at(sensor_name.data()).c_str(),
+            path = ::android::base::StringPrintf("%s/%s", path_map.at(sensor_info_pair.second.zone_name.data()).c_str(),
                                                  kSensorTempSuffix.data());
         } else {
             path = sensor_info_pair.second.temp_path;
@@ -891,7 +891,7 @@ bool ThermalHelper::readThermalSensor(std::string_view sensor_name, float *temp,
         }
 
         if (file_reading.empty()) {
-            LOG(ERROR) << "failed to read sensor: " << sensor_name;
+            LOG(ERROR) << "failed to read sensor: " << sensor_name << " zone: " << sensor_info.zone_name;
             return false;
         }
         *temp = std::stof(::android::base::Trim(file_reading));

@@ -758,6 +758,15 @@ bool ParseSensorInfo(const Json::Value &config,
             }
         }
 
+        std::string zone_name;
+        if (!sensors[i]["ZoneName"].empty()) {
+            zone_name = sensors[i]["ZoneName"].asString();
+        } else {
+            zone_name = name;
+        }
+
+        LOG(INFO) << "Sensor[" << name << "]'s ZoneName: " << zone_name;
+
         std::string temp_path;
         if (!sensors[i]["TempPath"].empty()) {
             temp_path = sensors[i]["TempPath"].asString();
@@ -828,6 +837,7 @@ bool ParseSensorInfo(const Json::Value &config,
                 .hot_hysteresis = hot_hysteresis,
                 .cold_hysteresis = cold_hysteresis,
                 .temp_path = temp_path,
+                .zone_name = zone_name,
                 .vr_threshold = vr_threshold,
                 .multiplier = multiplier,
                 .polling_delay = polling_delay,
