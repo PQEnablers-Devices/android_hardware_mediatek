@@ -11,4 +11,3 @@ PRODUCT_PACKAGES += \
     thermal_logd_mediatek
 endif
 
-BOARD_SEPOLICY_DIRS += hardware/google/pixel-sepolicy/thermal
