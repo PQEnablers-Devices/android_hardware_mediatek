@@ -39,6 +39,9 @@ ndk::ScopedAStatus Vibrator::getCapabilities(int32_t* _aidl_return) {
 
     #ifdef VIBRATOR_SUPPORTS_EFFECTS
     *_aidl_return |= IVibrator::CAP_PERFORM_CALLBACK;
+
+    if (mVibratorStrengthSupported)
+        *_aidl_return |= IVibrator::CAP_AMPLITUDE_CONTROL;
     #endif
 
     return ndk::ScopedAStatus::ok();
