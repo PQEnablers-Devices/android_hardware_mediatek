@@ -20,6 +20,8 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
+#define MTKPOWER_HINT_AUDIO_POWER 47
+
 namespace vendor::mediatek::hardware::mtkpower::implementation {
 
 using ::android::hardware::hidl_array;
@@ -31,6 +33,8 @@ using ::android::hardware::Void;
 using ::android::sp;
 
 struct MtkPower : public V1_2::IMtkPower {
+    MtkPower();
+    bool getAidlPowerHal(void);
     // Methods from ::vendor::mediatek::hardware::mtkpower::V1_0::IMtkPower follow.
     Return<void> mtkCusPowerHint(int32_t hint, int32_t data) override;
     Return<void> mtkPowerHint(int32_t hint, int32_t data) override;
