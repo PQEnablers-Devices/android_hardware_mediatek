@@ -9,6 +9,9 @@ cc_binary {
   init_rc: [
     "android.hardware.thermal@2.0-service.mediatek.rc",
   ],
+  required: [
+    "thermal_symlinks_mediatek",
+  ],
   shared_libs: [
     "libbase",
     "libcutils",
