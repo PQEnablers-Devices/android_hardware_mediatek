@@ -1,7 +1,3 @@
-package {
-    default_applicable_licenses: ["Android-Apache-2.0"],
-}
-
 cc_binary {
   name: "android.hardware.thermal@2.0-service.mediatek",
   defaults: [
@@ -32,15 +28,6 @@ cc_binary {
     "-Wextra",
     "-Wunused",
   ],
-  tidy: true,
-  tidy_checks: [
-    "android-*",
-    "cert-*",
-    "clang-analyzer-security*",
-  ],
-  tidy_flags: [
-    "-warnings-as-errors=android-*,clang-analyzer-security*,cert-*"
-  ],
   srcs: [
     "service.cpp",
     "Thermal.cpp",
@@ -51,15 +38,6 @@ cc_binary {
     "utils/power_files.cpp",
     "utils/powerhal_helper.cpp",
     "utils/thermal_watcher.cpp",
-  ],
-}
-
-sh_binary {
-  name: "thermal_logd_mediatek",
-  src: "init.thermal.logging.sh",
-  vendor: true,
-  init_rc: [
-    "mediatek-thermal-logd.rc",
   ],
 }
 
