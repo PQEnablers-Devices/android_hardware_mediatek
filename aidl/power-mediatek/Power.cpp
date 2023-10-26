@@ -100,9 +100,9 @@ void Power::handleInteractionHint(int32_t targetDuration) {
     // be implemented on vendors newer than S.
     int interactionHandle = mPerf->CusLockHint(MTKPOWER_HINT_UX_SCROLLING, durationMs, getpid());
 
-    if (mPreviousInteractionHandle > 0)
+    if (mPreviousInteractionHandle > 0) {
         mPerf->LockRel(mPreviousInteractionHandle);
-
+    }
     mPreviousInteractionHandle = interactionHandle;
 }
 
@@ -129,21 +129,22 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
                 mLaunchHandle = 0;
             }
 
-            if (enabled)
+            if (enabled) {
                 mLaunchHandle = mPerf->CusLockHint(MTKPOWER_HINT_LAUNCH, kLaunchBoostDuration, getpid());
-
+            }
             break;
         }
         case Mode::INTERACTIVE:
         {
-            if (enabled)
-                /* Device now in interactive state,
-                   restore all currently held hints. */
+            if (enabled) {
+                // Device is now in an interactive state,
+                // resume all previously performing hints.
                 mPerf->UserScnRestoreAll();
-            else
-                /* Device entering non interactive state,
-                   disable all hints to save power. */
+            } else {
+                // Device is entering a non interactive state,
+                // disable all hints to save power.
                 mPerf->UserScnDisableAll();
+            }
             break;
         }
         default:
