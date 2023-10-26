@@ -92,6 +92,13 @@ void Power::handleInteractionHint(int32_t targetDuration) {
         return;
     }
 
+    if (durationMs <= mPreviousInteractionDuration) {
+        // don't hint if previous hint's duration covers this hint's duration
+        if (elapsedTime <= (mPreviousInteractionDuration - durationMs)) {
+            return;
+        }
+    }
+
     mPreviousInteractionTime = currentInteractionTime;
     mPreviousInteractionDuration = durationMs;
 
