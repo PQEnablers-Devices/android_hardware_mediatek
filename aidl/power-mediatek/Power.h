@@ -18,13 +18,13 @@ namespace power {
 namespace impl {
 namespace mediatek {
 
-const int32_t kTouchBoostDuration = 25;  /* ms */
+const int32_t kTouchBoostDuration = 25;       /* ms */
 const int32_t kMinInteractiveDuration = 400;  /* ms */
 const int32_t kMaxInteractiveDuration = 5000; /* ms */
-const int32_t kLaunchBoostDuration = 30000; /* ms */
+const int32_t kLaunchBoostDuration = 30000;   /* ms */
 
 class Power : public BnPower {
-public:
+  public:
     Power();
     ~Power();
     ndk::ScopedAStatus setMode(Mode type, bool enabled) override;
@@ -36,11 +36,12 @@ public:
                                          int64_t durationNanos,
                                          std::shared_ptr<IPowerHintSession>* _aidl_return) override;
     ndk::ScopedAStatus getHintSessionPreferredRate(int64_t* outNanoseconds) override;
-private:
+
+  private:
     static long long calcTimespanUs(struct timespec start, struct timespec end);
     void handleInteractionHint(int32_t targetDuration);
 
-    libpowerhal_t *mPerf;
+    libpowerhal_t* mPerf;
 
     struct timespec mPreviousInteractionTime;
     int32_t mPreviousInteractionDuration;

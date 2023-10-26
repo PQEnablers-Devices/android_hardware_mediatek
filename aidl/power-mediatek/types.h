@@ -16,7 +16,7 @@
 #define NSINUS 1000L
 
 typedef struct libpowerhal_t {
-    void *perfLib;
+    void* perfLib;
     void (*Init)(int32_t);
     void (*LockRel)(int32_t);
     void (*UserScnDisableAll)(void);

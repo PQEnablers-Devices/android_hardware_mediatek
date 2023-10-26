@@ -16,11 +16,11 @@
 #include <android-base/file.h>
 #endif
 
-#define DLSYM_GET_FUNCTION(func_ptr, handle, func_name) \
-    func_ptr = (typeof(func_ptr))dlsym(handle, #func_name); \
-    if (func_ptr == NULL) { \
+#define DLSYM_GET_FUNCTION(func_ptr, handle, func_name)          \
+    func_ptr = (typeof(func_ptr))dlsym(handle, #func_name);      \
+    if (func_ptr == NULL) {                                      \
         LOG(ERROR) << "Could not locate symbol " #func_name "."; \
-        abort(); \
+        abort();                                                 \
     }
 
 namespace aidl {
@@ -57,7 +57,7 @@ Power::Power() {
     mPerf->Init(1);
 }
 
-Power::~Power() { }
+Power::~Power() {}
 
 long long Power::calcTimespanUs(struct timespec start, struct timespec end) {
     long long diff_in_us = 0;
@@ -79,7 +79,7 @@ void Power::handleInteractionHint(int32_t targetDuration) {
 
     if (targetDuration > durationMs) {
         durationMs = (targetDuration > kMaxInteractiveDuration) ? kMaxInteractiveDuration
-                                                              : targetDuration;
+                                                                : targetDuration;
     }
 
     clock_gettime(CLOCK_MONOTONIC, &currentInteractionTime);
@@ -123,26 +123,24 @@ ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {
 #endif
     switch (type) {
 #ifdef TAP_TO_WAKE_NODE
-        case Mode::DOUBLE_TAP_TO_WAKE:
-        {
+        case Mode::DOUBLE_TAP_TO_WAKE: {
             ::android::base::WriteStringToFile(enabled ? "1" : "0", TAP_TO_WAKE_NODE, true);
             break;
         }
 #endif
-        case Mode::LAUNCH:
-        {
+        case Mode::LAUNCH: {
             if (mLaunchHandle > 0) {
                 mPerf->LockRel(mLaunchHandle);
                 mLaunchHandle = 0;
             }
 
             if (enabled) {
-                mLaunchHandle = mPerf->CusLockHint(MTKPOWER_HINT_LAUNCH, kLaunchBoostDuration, getpid());
+                mLaunchHandle =
+                        mPerf->CusLockHint(MTKPOWER_HINT_LAUNCH, kLaunchBoostDuration, getpid());
             }
             break;
         }
-        case Mode::INTERACTIVE:
-        {
+        case Mode::INTERACTIVE: {
             if (enabled) {
                 // Device is now in an interactive state,
                 // resume all previously performing hints.
