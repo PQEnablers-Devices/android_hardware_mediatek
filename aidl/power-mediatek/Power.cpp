@@ -98,10 +98,12 @@ void Power::handleInteractionHint(int32_t targetDuration) {
     // most vendors don't implement the AOSP interaction hint in
     // powerscntbl.xml, but MTKPOWER_HINT_UX_SCROLLING is guaranteed to
     // be implemented on vendors newer than S.
-    if (mInteractionHandle > 0)
-        mPerf->LockRel(mInteractionHandle);
+    int interactionHandle = mPerf->CusLockHint(MTKPOWER_HINT_UX_SCROLLING, durationMs, getpid());
 
-    mInteractionHandle = mPerf->CusLockHint(MTKPOWER_HINT_UX_SCROLLING, durationMs, getpid());
+    if (mPreviousInteractionHandle > 0)
+        mPerf->LockRel(mPreviousInteractionHandle);
+
+    mPreviousInteractionHandle = interactionHandle;
 }
 
 ndk::ScopedAStatus Power::setMode(Mode type, bool enabled) {

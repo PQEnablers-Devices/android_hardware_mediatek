@@ -44,7 +44,7 @@ private:
 
     struct timespec mPreviousInteractionTime;
     int32_t mPreviousInteractionDuration;
-    int32_t mInteractionHandle;
+    int32_t mPreviousInteractionHandle;
     int32_t mLaunchHandle;
 };
 
