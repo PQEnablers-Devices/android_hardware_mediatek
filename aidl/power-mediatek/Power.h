@@ -18,7 +18,7 @@ namespace power {
 namespace impl {
 namespace mediatek {
 
-const int32_t kTouchBoostDuration = 25;       /* ms */
+const int32_t kTouchBoostDuration = 10;       /* ms */
 const int32_t kMinInteractiveDuration = 400;  /* ms */
 const int32_t kMaxInteractiveDuration = 5000; /* ms */
 const int32_t kLaunchBoostDuration = 30000;   /* ms */
